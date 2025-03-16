@@ -27,9 +27,20 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
   const [dotsAnimating, setDotsAnimating] = useState(true);
   const [dotsColor, setDotsColor] = useState('#000');
   
-  // Add these new shared values for the sliding text
-  const sochAiTextOpacity = useSharedValue(0);
+  // Replace the single text opacity with individual letter opacities
+  const letterS = useSharedValue(0);
+  const letterO = useSharedValue(0);
+  const letterC = useSharedValue(0);
+  const letterH = useSharedValue(0);
+  const letterA = useSharedValue(0);
+  const letterI = useSharedValue(0);
+  
+  // Keep the shared translateX value for overall movement
   const sochAiTextTranslateX = useSharedValue(0);
+
+  // Adjust the translation values to maintain 5px gap
+  const logoTranslateX = -85; // Move logo less far left
+  const textTranslateX = 55; // Set smaller separation with 5px gap
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [
@@ -67,9 +78,34 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
     // backgroundColor: '#ffffff',
   }));
 
-  // Add new animated style for SochAi text
-  const sochAiTextStyle = useAnimatedStyle(() => ({
-    opacity: sochAiTextOpacity.value,
+  // Create individual animated styles for each letter
+  const letterSStyle = useAnimatedStyle(() => ({
+    opacity: letterS.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+  
+  const letterOStyle = useAnimatedStyle(() => ({
+    opacity: letterO.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+  
+  const letterCStyle = useAnimatedStyle(() => ({
+    opacity: letterC.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+  
+  const letterHStyle = useAnimatedStyle(() => ({
+    opacity: letterH.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+  
+  const letterAStyle = useAnimatedStyle(() => ({
+    opacity: letterA.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+  
+  const letterIStyle = useAnimatedStyle(() => ({
+    opacity: letterI.value,
     transform: [{ translateX: sochAiTextTranslateX.value }],
   }));
 
@@ -99,37 +135,53 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
         scale.value = withTiming(0.527, { duration: 300 });
 
         timer2 = setTimeout(() => {
-          // When logo moves left, make "SochAi" text appear from center and move right
-          translateX.value = withTiming(-80, { duration: 1000 });
-          sochAiTextOpacity.value = withTiming(1, { duration: 400 });
-          sochAiTextTranslateX.value = withTiming(80, { duration: 1000 });
+          // Move logo less far left and text less far right for a tighter gap
+          translateX.value = withTiming(logoTranslateX, { duration: 1000 });
+          
+          // Fade in each letter with a slight stagger
+          letterS.value = withTiming(1, { duration: 300 });
+          setTimeout(() => letterO.value = withTiming(1, { duration: 300 }), 50);
+          setTimeout(() => letterC.value = withTiming(1, { duration: 300 }), 100);
+          setTimeout(() => letterH.value = withTiming(1, { duration: 300 }), 150);
+          setTimeout(() => letterA.value = withTiming(1, { duration: 300 }), 200);
+          setTimeout(() => letterI.value = withTiming(1, { duration: 300 }), 250);
+          
+          sochAiTextTranslateX.value = withTiming(textTranslateX, { duration: 1000 });
 
           setTimeout(() => {
-            // When logo moves back to center, make "SochAi" text move back to center and disappear
-            translateX.value = withTiming(0, { duration: 1000 });
-            sochAiTextTranslateX.value = withTiming(0, { duration: 1000 });
+            // Make text disappear before starting the return journey
+            setTimeout(() => letterI.value = withTiming(0, { duration: 250 }), 0);
+            setTimeout(() => letterA.value = withTiming(0, { duration: 250 }), 100);
+            setTimeout(() => letterH.value = withTiming(0, { duration: 250 }), 200);
+            setTimeout(() => letterC.value = withTiming(0, { duration: 250 }), 300);
+            setTimeout(() => letterO.value = withTiming(0, { duration: 250 }), 400);
+            setTimeout(() => letterS.value = withTiming(0, { duration: 250 }), 500);
+            
+            // Delay the return movement slightly to ensure text is mostly faded out
             setTimeout(() => {
-              sochAiTextOpacity.value = withTiming(0, { duration: 400 });
-            }, 600);
-
-            setTimeout(() => {
-              translateY.value = withTiming(
-                -150,
-                { duration: 800 },
-                (finished) => {
-                  if (finished) {
-                    blueBackgroundOpacity.value = withTiming(1, { duration: 800 });
-                    blackLogoOpacity.value = withTiming(0, { duration: 400 });
-                    runOnJS(setDotsColor)('#fff');
-                    whiteLogoOpacity.value = withTiming(1, { duration: 400 }, () => {
-                      runOnJS(setAnimationFinished)(true);
-                      textOpacity.value = withTiming(1, { duration: 600 });
-                      buttonOpacity.value = withTiming(1, { duration: 600 });
-                    });
+              // When logo moves back to center, make "SochAi" text move back to center
+              translateX.value = withTiming(0, { duration: 1000 });
+              sochAiTextTranslateX.value = withTiming(0, { duration: 1000 });
+              
+              setTimeout(() => {
+                translateY.value = withTiming(
+                  -150,
+                  { duration: 800 },
+                  (finished) => {
+                    if (finished) {
+                      blueBackgroundOpacity.value = withTiming(1, { duration: 800 });
+                      blackLogoOpacity.value = withTiming(0, { duration: 400 });
+                      runOnJS(setDotsColor)('#fff');
+                      whiteLogoOpacity.value = withTiming(1, { duration: 400 }, () => {
+                        runOnJS(setAnimationFinished)(true);
+                        textOpacity.value = withTiming(1, { duration: 600 });
+                        buttonOpacity.value = withTiming(1, { duration: 600 });
+                      });
+                    }
                   }
-                }
-              );
-            }, 800);
+                );
+              }, 800);
+            }, 600);
           }, 1500);
         }, 300);
       }, 500);
@@ -148,10 +200,15 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.blueBackground, backgroundStyles]} />
       
-      {/* Add the new animated "SochAi" text */}
-      <Animated.Text style={[styles.sochAiText, sochAiTextStyle]}>
-        SochAi
-      </Animated.Text>
+      {/* Position the text container relative to the center of the screen */}
+      <View style={styles.sochAiContainer}>
+        <Animated.Text style={[styles.sochAiLetter, letterSStyle]}>S</Animated.Text>
+        <Animated.Text style={[styles.sochAiLetter, letterOStyle]}>o</Animated.Text>
+        <Animated.Text style={[styles.sochAiLetter, letterCStyle]}>c</Animated.Text>
+        <Animated.Text style={[styles.sochAiLetter, letterHStyle]}>h</Animated.Text>
+        <Animated.Text style={[styles.sochAiLetter, letterAStyle, styles.redLetter]}>A</Animated.Text>
+        <Animated.Text style={[styles.sochAiLetter, letterIStyle, styles.redLetter]}>i</Animated.Text>
+      </View>
       
       <Animated.View style={[styles.logoContainer, animatedStyles]}>
         <View style={styles.logoWrapper}>
@@ -295,12 +352,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
-  sochAiText: {
+  sochAiContainer: {
     position: 'absolute',
+    flexDirection: 'row',
+    zIndex: 10,
+    // Position the container more precisely
+    alignItems: 'center',
+    justifyContent: 'center',
+    // Add some height to ensure proper vertical alignment
+    height: 40,
+  },
+  sochAiLetter: {
     fontSize: 32,
     fontWeight: '700',
     color: '#000',
-    zIndex: 10,
+  },
+  // New style for red letters
+  redLetter: {
+    color: '#FF0000',
   },
 });
 
@@ -486,7 +555,7 @@ const styles = StyleSheet.create({
 //     position: 'absolute',
 //     width: '100%',
 //     height: '100%',
-//     backgroundColor: '#007BFF',
+//     backgroundColor: '#0066FF',
 //   },
 //   logoContainer: {
 //     width: 167,
