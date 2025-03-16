@@ -23,8 +23,9 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
   const buttonOpacity = useSharedValue(0);
   const blackLogoOpacity = useSharedValue(1);
   const whiteLogoOpacity = useSharedValue(0);
-  const [showDots, setShowDots] = useState(true);
   const [animationFinished, setAnimationFinished] = useState(false);
+  const [dotsAnimating, setDotsAnimating] = useState(true);
+  const [dotsColor, setDotsColor] = useState('#000');
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [
@@ -72,9 +73,9 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
     buttonOpacity.value = withTiming(1, { duration: 600 });
   };
 
-  const hideDots = () => {
-    setShowDots(false);
-  };
+  // const hideDots = () => {
+  //   setShowDots(false);
+  // };
 
   useEffect(() => {
     let timer1: NodeJS.Timeout;
@@ -84,8 +85,8 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
       scale.value = withTiming(0.8, { duration: 500 });
 
       timer1 = setTimeout(() => {
+        runOnJS(setDotsAnimating)(false);
         scale.value = withTiming(0.527, { duration: 300 });
-        setShowDots(false);
 
         timer2 = setTimeout(() => {
           translateX.value = withTiming(-80, { duration: 500 });
@@ -94,7 +95,6 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
             translateX.value = withTiming(0, { duration: 500 });
 
             setTimeout(() => {
-              // Use callback for translateY animation
               translateY.value = withTiming(
                 -150,
                 { duration: 800 },
@@ -102,8 +102,8 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
                   if (finished) {
                     blueBackgroundOpacity.value = withTiming(1, { duration: 800 });
                     blackLogoOpacity.value = withTiming(0, { duration: 400 });
+                    runOnJS(setDotsColor)('#fff');
                     whiteLogoOpacity.value = withTiming(1, { duration: 400 }, () => {
-                      // Trigger after logo opacity changes
                       runOnJS(setAnimationFinished)(true);
                       textOpacity.value = withTiming(1, { duration: 600 });
                       buttonOpacity.value = withTiming(1, { duration: 600 });
@@ -141,7 +141,7 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
             style={[styles.logo, whiteLogoStyles]}
             resizeMode="contain"
           />
-          <DotsLoader />
+          <DotsLoader isAnimating={dotsAnimating} dotsColor={dotsColor} />
         </View>
       </Animated.View>
 
