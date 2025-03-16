@@ -1,0 +1,2 @@
+# SochAi
+splash screen development
