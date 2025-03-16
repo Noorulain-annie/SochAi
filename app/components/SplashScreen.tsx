@@ -26,6 +26,10 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
   const [animationFinished, setAnimationFinished] = useState(false);
   const [dotsAnimating, setDotsAnimating] = useState(true);
   const [dotsColor, setDotsColor] = useState('#000');
+  
+  // Add these new shared values for the sliding text
+  const sochAiTextOpacity = useSharedValue(0);
+  const sochAiTextTranslateX = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [
@@ -63,6 +67,12 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
     // backgroundColor: '#ffffff',
   }));
 
+  // Add new animated style for SochAi text
+  const sochAiTextStyle = useAnimatedStyle(() => ({
+    opacity: sochAiTextOpacity.value,
+    transform: [{ translateX: sochAiTextTranslateX.value }],
+  }));
+
   const handleNavigateToTabs = () => {
     onAnimationComplete();
   };
@@ -89,10 +99,18 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
         scale.value = withTiming(0.527, { duration: 300 });
 
         timer2 = setTimeout(() => {
-          translateX.value = withTiming(-80, { duration: 500 });
+          // When logo moves left, make "SochAi" text appear from center and move right
+          translateX.value = withTiming(-80, { duration: 1000 });
+          sochAiTextOpacity.value = withTiming(1, { duration: 400 });
+          sochAiTextTranslateX.value = withTiming(80, { duration: 1000 });
 
           setTimeout(() => {
-            translateX.value = withTiming(0, { duration: 500 });
+            // When logo moves back to center, make "SochAi" text move back to center and disappear
+            translateX.value = withTiming(0, { duration: 1000 });
+            sochAiTextTranslateX.value = withTiming(0, { duration: 1000 });
+            setTimeout(() => {
+              sochAiTextOpacity.value = withTiming(0, { duration: 400 });
+            }, 600);
 
             setTimeout(() => {
               translateY.value = withTiming(
@@ -111,8 +129,8 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
                   }
                 }
               );
-            }, 500);
-          }, 500);
+            }, 800);
+          }, 1500);
         }, 300);
       }, 500);
     };
@@ -129,6 +147,12 @@ export function SplashScreen({ onAnimationComplete }: SplashScreenProps) {
   return (
     <SafeAreaView style={styles.container}>
       <Animated.View style={[styles.blueBackground, backgroundStyles]} />
+      
+      {/* Add the new animated "SochAi" text */}
+      <Animated.Text style={[styles.sochAiText, sochAiTextStyle]}>
+        SochAi
+      </Animated.Text>
+      
       <Animated.View style={[styles.logoContainer, animatedStyles]}>
         <View style={styles.logoWrapper}>
           <Animated.Image
@@ -235,8 +259,8 @@ const styles = StyleSheet.create({
   paragrapgh: {
     top: 25,
     width: 300,
-    fontWeight: 400,
-    size: 18,
+    fontWeight: '400',
+    fontSize: 18,
     color: '#ffffff'
   },
   welcomeText: {
@@ -270,6 +294,13 @@ const styles = StyleSheet.create({
     color: '#007BFF',
     fontSize: 18,
     fontWeight: '600',
+  },
+  sochAiText: {
+    position: 'absolute',
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#000',
+    zIndex: 10,
   },
 });
 
