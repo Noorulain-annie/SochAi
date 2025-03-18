@@ -1,74 +1,209 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+const SignupScreen = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Image style={{ marginTop: 30, marginLeft: 220, }} source={require('../../assets/images/arrow_image.png')} />
+      </View>
+      {/* logo */}
+      <View style={styles.logoContainer}>
+        <Image source={require('../../assets/images/LoginLogo.png')} />
+        <Text style={styles.buttonText}>
+          Soch
+          <Text style={styles.redText}>Ai</Text>
+        </Text>
+      </View>
+
+      {/* welcome text */}
+      <View style={styles.welcomeTextContainer}>
+        <Text style={styles.textheading}>Welcome Back!</Text>
+        <Text style={styles.textsubheading}>Genius say Jugaar tak - Smarter Together</Text>
+      </View>
+
+      {/* login buttons */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonWrapper}>
+          <View style={styles.buttonRow}>
+            <Image source={require('../../assets/images/logo_facebook.png')} />
+            <Text style={{ color: '#383838' }}>Continue with Facebook</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonWrapper}>
+          <View style={styles.buttonRow}>
+            <Image source={require('../../assets/images/logo_google.png')} />
+            <Text style={{ color: '#383838' }}>Continue with Google</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonWrapper}>
+          <View style={styles.buttonRow}>
+            <Image source={require('../../assets/images/logo_apple.png')} />
+            <Text style={{ color: '#383838' }}>Continue with Apple</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+        <Text style={{ color: '#AEAEAE' }}>or</Text>
+      </View>
+
+      <TouchableOpacity>
+        <View style={{
+          display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20, height: 50, paddingHorizontal: 10,
+          paddingVertical: 7, backgroundColor: '#007BFF',
+          marginHorizontal: 31, borderRadius: 12 // Add this line
+
+        }}>
+          <Text style={{ color: '#ffffff', fontWeight: 700 }}>Login with username</Text>
+        </View>
+      </TouchableOpacity>
+
+      <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+        <Text style={{ color: '#AEAEAE' }}>Create a </Text>
+        <Text style={{ color: '#007BFF', fontWeight: 700 }}>Free Account</Text>
+      </View>
+
+
+
+    </SafeAreaView>
   );
-}
+};
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+  },
+  logoContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 5,
     flexDirection: 'row',
+    gap: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 42.85,
+    fontWeight: '700',
+  },
+  redText: {
+    color: 'red',
+  },
+  welcomeTextContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 369,
+    height: 63,
+    marginTop: 35,
+    marginHorizontal: 31,
+    gap: 5,
+  },
+  textheading: {
+    fontSize: 30.96,
+    fontWeight: '700',
+    color: 'black',
+  },
+  textsubheading: {
+    color: '#AEAEAE',
+    width: 309,
+    height: 25,
+    fontSize: 15.96,
+    fontWeight: '400',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    marginTop: 40,
+  },
+  buttonWrapper: {
+    width: 369,
+    marginTop: 10,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    gap: 15,
     alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+    paddingHorizontal: 10,
+    paddingVertical: 7,
+    justifyContent: 'center'
   },
 });
+
+
+// import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+// import React from 'react'
+// import { SafeAreaView } from 'react-native-safe-area-context'
+
+// const SignupScreen = () => {
+//   return (
+//     <SafeAreaView>
+//       {/* logo  */}
+//       <View style={{ display: 'flex', justifyContent: 'center', top: '134', flexDirection: 'row', gap: '10' }}>
+//         <Image source={require('../../assets/images/LoginLogo.png')} />
+//         <Text style={styles.buttonText}>
+//           Soch
+//           <Text style={styles.redText}>Ai</Text>
+//         </Text>
+//       </View>
+//       {/* welcome text */}
+//       <View style={{ display: 'flex', flexDirection: 'column', width: '369', height: '63', top: '170', marginHorizontal: '31', gap: '5' }}>
+//         <Text style={styles.textheading}>Welcome Back!</Text>
+//         <Text style={styles.textsubheading}>Genius say Jugaar tak - Smarter Together</Text>
+//       </View>
+//       {/* login with */}
+//       <View style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+//         <TouchableOpacity style={{ width: 369, top: 230 }}>
+//           <View style={{ display: 'flex', flexDirection: 'row', gap: 15, justifyContent: 'center', alignItems: 'center' }}>
+//             <Image source={require('../../assets/images/logo_facebook.png')} />
+//             <Text style={{ color: '#383838' }}>Continue with Facebook</Text>
+//           </View>
+//         </TouchableOpacity>
+
+//         <TouchableOpacity style={{ width: 369, top: 230 }}>
+//           <View style={{ display: 'flex', flexDirection: 'row', gap: 15, justifyContent: 'center', alignItems: 'center' }}>
+//             <Image source={require('../../assets/images/logo_facebook.png')} />
+//             <Text style={{ color: '#383838' }}>Continue with Google</Text>
+//           </View>
+//         </TouchableOpacity>
+
+//         <TouchableOpacity style={{ width: 369, top: 230 }}>
+//           <View style={{ display: 'flex', flexDirection: 'row', gap: 15, justifyContent: 'center', alignItems: 'center' }}>
+//             <Image source={require('../../assets/images/logo_facebook.png')} />
+//             <Text style={{ color: '#383838' }}>Continue with Apple</Text>
+//           </View>
+//         </TouchableOpacity>
+//       </View>
+//     </SafeAreaView >
+//   )
+// }
+
+// export default SignupScreen
+
+// const styles = StyleSheet.create({
+//   buttonText: {
+//     color: 'black',
+//     fontSize: 42.85,
+//     fontWeight: '700',
+//   },
+//   redText: {
+//     color: 'red',
+//   },
+//   textheading: {
+//     fontSize: 30.96,
+//     fontWeight: '700',
+//     color: 'black',
+
+//   },
+//   textsubheading: {
+//     color: '#AEAEAE',
+//     width: 309,
+//     height: 25,
+//     fontSize: 15.96,
+//     fontWeight: '400',
+//   }
+// })
