@@ -1,7 +1,9 @@
 import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native'
 import React, { useState } from 'react'
+import { useRouter } from 'expo-router';
 
 const SignupScreen = () => {
+  const router = useRouter();
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
 
@@ -18,7 +20,7 @@ const SignupScreen = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Login</Text>
           <Text style={styles.subtitle}>
-            Genius say Jugaar tak - <Text style={{ fontWeight: '600' }}>Smarter Together</Text>
+            Genius say Jugaar tak - <Text style={{ fontWeight: '500' }}>Smarter Together</Text>
           </Text>
 
           <Text style={styles.label}>Username/email</Text>
@@ -39,7 +41,7 @@ const SignupScreen = () => {
             onBlur={() => setIsPasswordFocused(false)}
           />
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push('/ForgotPassword')}>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
 
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: 'grey',
+    color: '#AEAEAE',
     marginBottom: 30,
   },
   label: {
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     borderRadius: 5,
-    padding: 10,
+    padding: 13,
     marginBottom: 20,
   },
   inputFocused: {
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
+    marginTop: 150,
   },
   buttonText: {
     color: '#fff',
