@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, TextInpu
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router';
 
-const ForgotPassword = () => {
+const CreateAccount = () => {
     const router = useRouter();
     const [isEmailFocused, setIsEmailFocused] = useState(false)
 
@@ -17,22 +17,20 @@ const ForgotPassword = () => {
 
                 {/* Login Form */}
                 <View style={styles.container}>
-                    <Text style={styles.title}>Reset Password</Text>
+                    <Text style={styles.title}>Create Account</Text>
                     <Text style={styles.subtitle}>
-                        Please enter your email and we will send an OTP
-                        code in the next step to reset your password
+                        Genius say Jugaar tak - <Text style={{ fontWeight: '500' }}>Smarter Together</Text>
                     </Text>
 
-                    <Text style={styles.label}>Username/email</Text>
+                    <Text style={styles.label}>Your emial address</Text>
                     <TextInput
                         style={[styles.input, isEmailFocused && styles.inputFocused]}
-                        placeholder="anthony@gofetchst.com"
                         keyboardType="email-address"
                         onFocus={() => setIsEmailFocused(true)}
                         onBlur={() => setIsEmailFocused(false)}
                     />
-                    <TouchableOpacity onPress={() => router.push('/OtpVerificationPassword')} style={styles.button}>
-                        <Text style={styles.buttonText}>Continue</Text>
+                    <TouchableOpacity onPress={() => router.push('/OtpVerificationEmail')} style={styles.button}>
+                        <Text style={styles.buttonText}>Verify Your Email</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -40,7 +38,7 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword
+export default CreateAccount
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -56,6 +54,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
+        color: '#252525',
         fontSize: 32,
         fontWeight: 'bold',
         marginBottom: 5,
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
         marginBottom: 5,
+        color: '#383838'
     },
     input: {
         borderWidth: 1,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        marginTop: 240,
+        marginTop: 260,
         backgroundColor: '#007BFF',
         padding: 15,
         borderRadius: 5,

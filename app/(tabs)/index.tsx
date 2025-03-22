@@ -64,13 +64,10 @@ const SignupScreen = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+      <TouchableOpacity onPress={() => router.push('/CreateAccount')} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
         <Text style={{ color: '#AEAEAE' }}>Create a </Text>
         <Text style={{ color: '#007BFF', fontWeight: 700 }}>Free Account</Text>
       </TouchableOpacity>
-
-
-
     </SafeAreaView>
   );
 };

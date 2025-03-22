@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, TextInpu
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router';
 
-const SignupScreen = () => {
+const LoginScreen = () => {
   const router = useRouter();
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
@@ -45,7 +45,7 @@ const SignupScreen = () => {
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={() => router.push('/AreaOfInterest')} style={styles.button}>
             <Text style={styles.buttonText}>Start Soch</Text>
           </TouchableOpacity>
         </View>
@@ -54,7 +54,7 @@ const SignupScreen = () => {
   )
 }
 
-export default SignupScreen
+export default LoginScreen
 
 const styles = StyleSheet.create({
   safeArea: {

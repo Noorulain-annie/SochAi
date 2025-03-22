@@ -16,8 +16,12 @@ import { Tabs } from 'expo-router';
 import EmailVerification from './EmailVerification';
 import ForgotPassword from './ForgotPassword';
 import LoginScreen from './LoginScreen';
-import OtpVerification from './OtpVerification';
+import OtpVerificationPassword from './OtpVerificationPassword';
 import NewPassword from './NewPassword';
+import CreateAccount from './CreateAccount';
+import OtpVerificationEmail from './OtpVerificationEmail';
+import AreaOfInterest from './AreaOfInterest';
+import Chat from './Chat';
 
 const Stack = createStackNavigator();
 
@@ -39,9 +43,13 @@ export default function TabsLayout() {
       {/* Non-tab screens that need back navigation */}
       <Stack.Screen name="EmailVerification" component={EmailVerification} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="OtpVerification" component={OtpVerification} />
+      <Stack.Screen name="OtpVerificationPassword" component={OtpVerificationPassword} />
+      <Stack.Screen name="OtpVerificationEmail" component={OtpVerificationEmail} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="NewPassword" component={NewPassword} />
+      <Stack.Screen name="CreateAccount" component={CreateAccount} />
+      <Stack.Screen name="AreaOfInterest" component={AreaOfInterest} />
+      <Stack.Screen name="Chat" component={Chat} />
 
     </Stack.Navigator>
   );
