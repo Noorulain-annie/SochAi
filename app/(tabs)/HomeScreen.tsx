@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    View,
-    Text,
-    ScrollView,
-    Image,
-    TouchableOpacity,
-    StyleSheet,
-    SafeAreaView,
-    StatusBar,
-    FlatList,
-} from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import { Ionicons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { usePosts } from '../context/PostContext';
@@ -17,67 +7,6 @@ import { usePosts } from '../context/PostContext';
 const HomeScreen = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const { posts, fetchPosts } = usePosts();
-    // const [posts, setPosts] = useState([
-    //     {
-    //         id: 1,
-    //         author: 'Tim Bakes',
-    //         avatar: require('../../assets/images/tim.png'),
-    //         timeAgo: '4:48 Medical',
-    //         title: "What's The Best Way To Remove Dandruff Naturally?",
-    //         likes: 5300,
-    //         dislikes: 60,
-    //         comments: 158,
-    //         shares: 2,
-    //         saved: true,
-    //     },
-    //     {
-    //         id: 2,
-    //         author: 'Adam Broke',
-    //         avatar: require('../../assets/images/adam.png'),
-    //         timeAgo: '5:58 Health',
-    //         title: "This Mediterranean Bowl Is All You Need",
-    //         description: "Nutrients - Chicken Breasts - Adds Lean Protein Sumac Marinade - Olive Oil Adds Healthy Fats Quinoa - Excellent Source of Fiber & Protein",
-    //         images: [
-    //             require('../../assets/images/bowl.png'),
-    //             require('../../assets/images/bowl.png'),
-    //             require('../../assets/images/bowl.png'),
-    //             require('../../assets/images/bowl.png'),
-    //         ],
-    //         hashtags: '#PartyNight #UnleashThePartyAnimal #DanceTillDawn',
-    //         likes: 0,
-    //         dislikes: 0,
-    //         comments: 0,
-    //         shares: 0,
-    //         saved: false,
-    //     },
-    //     {
-    //         id: 3,
-    //         author: 'Noorulain',
-    //         avatar: require('../../assets/images/tim.png'),
-    //         timeAgo: '2h ago DIY',
-    //         description: "only recently discovered a love for frugality. This came when I started making my own laundry detergent. I was blown away by the cost savings. ( plus it smells good and great) I have made most of my own cleaning products but I am wondering what else you can save money one by making things yourself. What things do you make yourself that you will never buy from the store again?",
-    //         hashtags: '#PartyNight #UnleashThePartyAnimal #DanceTillDawn',
-    //         likes: 4300,
-    //         dislikes: 40,
-    //         comments: 258,
-    //         shares: 22,
-    //         saved: true,
-    //     },
-    // ]);
-
-
-
-    // const fetchPosts = async () => {
-    //     try {
-    //         const response = await fetch('http://192.168.40.122:5000/api/posts');
-    //         if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
-    //         const data = await response.json();
-    //         console.log('Fetched posts:', data); // Log fetched data
-    //         setPosts([...data, ...posts]); // Combine API posts with boilerplate
-    //     } catch (error) {
-    //         console.error('Error fetching posts:', error);
-    //     }
-    // };
 
     useEffect(() => {
         fetchPosts();
@@ -158,7 +87,13 @@ const HomeScreen = () => {
                             <View style={styles.postContainer}>
                                 <View style={styles.avatarColumn}>
                                     <Image
-                                        source={typeof post.avatar === 'string' ? { uri: post.avatar } : post.avatar}
+                                        source={
+                                            post.avatar
+                                                ? typeof post.avatar === 'string'
+                                                    ? { uri: post.avatar } // Handle URL strings from API
+                                                    : post.avatar // Handle local require() references
+                                                : require('../../assets/images/profile.png') // Fallback
+                                        }
                                         style={styles.avatar}
                                     />
                                 </View>
@@ -244,13 +179,12 @@ const HomeScreen = () => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.messageButton}>
+            <TouchableOpacity onPress={() => router.push('/Chat')} style={styles.messageButton}>
                 <Image style={{ width: 26, height: 26, resizeMode: 'contain' }} source={require('../../assets/images/red_logo.png')} />
             </TouchableOpacity>
         </SafeAreaView>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

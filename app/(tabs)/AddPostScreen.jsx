@@ -16,7 +16,7 @@ import { router } from 'expo-router';
 import { Menu, X, ChevronRight, Plus, Mic, Image as ImageIcon, Camera, Video, ArrowUp, ArrowDown, MoveUpRight } from 'lucide-react-native';
 import { usePosts } from '../context/PostContext';
 
-const CreatePostScreen = () => {
+const AddPostScreen = () => {
     const { addPost } = usePosts();
     const [postText, setPostText] = useState('');
     const [title, setTitle] = useState('');
@@ -40,7 +40,7 @@ const CreatePostScreen = () => {
     const handlePost = async () => {
         const postData = {
             author: 'Sheikh Usama',
-            avatar: '../../assets/images/profile.png',
+            avatar: require('../../assets/images/profile.png'),
             title,
             description: postText,
             images: selectedImages,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CreatePostScreen;
+export default AddPostScreen;
 
 // import React, { useState, useRef } from 'react';
 // import {

@@ -7,7 +7,7 @@ export const PostProvider = ({ children }) => {
         {
             id: 1,
             author: 'Tim Bakes',
-            avatar: require('../../assets/images/tim.png'), // Adjust path as needed
+            avatar: require('../../assets/images/tim.png'),
             timeAgo: '4:48 Medical',
             title: "What's The Best Way To Remove Dandruff Naturally?",
             likes: 5300,
